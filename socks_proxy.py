@@ -69,11 +69,11 @@ class Proxy(StreamRequestHandler):
         while True:
             r, w, e = select.select([client, remote], [], [])
             if client in r:
-                data = client.recv(1024)
+                data = client.recv(1024 * 1024)
                 if remote.send(data) <= 0:
                     break
             if remote in r:
-                data = remote.recv(1024)
+                data = remote.recv(1024 * 1024)
                 if client.send(data) <= 0:
                     break
 
